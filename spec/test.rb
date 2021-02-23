@@ -9,20 +9,22 @@ describe Player do
 
     describe '#player_sign' do
         it "return player1 = x and player2 = o  respectivery when sign is x" do
-            expect(play.player_sign('x')).to eq('x')
+            
+            sign = 'x'
+            expect(play.player_sign(sign)).to eq(@player1)
        end
+    end
    
       
 
     # test sign_validate method
 
     describe '#sign_validate' do
-            it "return false " do
-            expect(play.sign_validate('X')).to eql(false)
+            it "return true or false" do            
+            expect(play.sign_validate('x')).to eql(true)
+            expect(play.sign_validate('y')).to eql(false)
         end
-        it "return true " do
-            expect(play.sign_validate('X')).not_to eql(true)
-        end
+        
     end
 
     # test move_validate method
@@ -41,7 +43,8 @@ describe Player do
     end
     it "return false when move is not between 1 and 9" do
         move = move.to_i
-        expect(play.move_validate(move)).not_to eql(true)
+        expect(play.move_validate(10)).to eql(false)
+        expect(play.move_validate('f')).to eql(false)
     end
 
     # test index_taken
@@ -73,12 +76,17 @@ describe '#flip_user' do
 
 end
 
+# test win method
 
-    # describe '#draw' do
-    #     it 'return string' do
-    #     expect(play.draw).to eql('its a draw\nGame Ended ! \u{1F61C')
-    #     end
-    # end
-# end
+describe '#wins' do
+    it 'return true or false' do
+        expect(play.wins(%w[x x x], 'x')).to eql(true)
+        expect(play.wins(%w[o x x], 'o')).to eql(false)
+        expect(play.wins(%w[o o x], 'o')).to eql(false)
+        expect(play.wins(%w[o x x], 'x')).to eql(false)
+        expect(play.wins(%w[o x o], 'o')).to eql(false)
+        expect(play.wins(%w[x o x], 'x')).to eql(false)
+      end
 end
 end
+
